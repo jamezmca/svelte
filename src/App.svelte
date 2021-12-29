@@ -1,7 +1,8 @@
 <script>
+	import { fade, fly } from "svelte/transition";
 	export let name;
 	let rando;
-	$: result = Math.round(rando) ? "winner" : "loser";
+	$: result = Math.round(rando * 100);
 
 	function setRando() {
 		rando = Math.random();
@@ -20,9 +21,14 @@
 	<input bind:value={rando} />
 
 	{#if result > 75}
-		<p>fat</p>
+		<p transition:fade>fat</p>
 	{:else if result > 50}
-		<p>tiddies</p>
+		<p
+			in:fly={{ x: 1000, duration: 500 }}
+			out:fly={{ x: -500, duration: 500 }}
+		>
+			tiddies
+		</p>
 	{:else}
 		<p>loser</p>
 	{/if}
